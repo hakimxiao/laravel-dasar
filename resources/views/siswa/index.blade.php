@@ -28,6 +28,9 @@
             </tbody>
         </table>
     </div>
+    <div class="py-10">
+        {{ $data->appends(request()->query())->links() }}
+    </div>
     {{-- <ol>
         <li>{{$data[0]['nama']}}</li> || Cara Manual : ambil data pertama, ambil key nama ||
         @foreach ($data as $siswa)

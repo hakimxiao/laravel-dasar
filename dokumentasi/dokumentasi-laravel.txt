@@ -3,7 +3,7 @@ PHP MENGGUNAKAN ARRAY ASSOSIATIF
 
 
 
--> assing data ke view 
+-> passing data ke view 
     Laravel menyediakan beberapa cara untuk mengirim (pass) data dari route atau controller ke view.
 
     |       METODE      |       |       CONTOH          |
@@ -351,6 +351,24 @@ PHP MENGGUNAKAN ARRAY ASSOSIATIF
                         1. jalankan di terminal 
                             php artisan make:controller SiswaController --resource
                         2. dia membuatkan kita file controller yang didalamnya sudah ada template function nya 
+
+
+-- PAGINATION 
+    Adalah teknik yang digunakan khususnya didalam tabel yang dimana kita mengatur berapa total penampilan data 
+    dan membuat tabel menjadi lebih enak serta mudah.
+     Cara melakukkan hal tersebut di laravel sangat lah mudah : 
+        1. di controller nya kita ->get() karena dia akan  mengambil semua data yang ada pada database. 
+            Gunakan --** ->paginate(jumlahDataPerHalaman) **--
+        2. buat tombol pagination di dalam views yang bersangkutan dengan tabel kemudian kalian cukup bungkus 
+            misal didalam div kode berikut {{ $data->links() }} dan pagination berhasil dibuat.
+        3. ini murni buatan laravel dan jika kalian perhatikan cara laravel mengehendle pagination 
+            itu dengan mengirim query didalamn route
+    Q   4. perlu diperhatikan misal kita bermain dengan fitur query, saat route kita ada ?search=hakim maka saat kita 
+            melakukkan pagination dia akan tereset kembali ke route pagination laravel. Ini tidak bagus karena mengganggu 
+            sistem kita 
+    A   5. Caranya adalah kita appends dlu dari request misal gaada maka baru ke link misal ada baru satukan jadi di view kita rubah 
+            menjadi --** {{ $data->appends(request()->query())->links() }} **-- maka dia tidak akan merusak routing kita  
+            melaikan meng append http://example.test/siswa?search=hakim&page=2
                            
 
 
