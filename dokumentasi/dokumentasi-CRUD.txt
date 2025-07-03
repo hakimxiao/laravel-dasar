@@ -1,0 +1,5 @@
+Read Data (C Read UD)
+    Untuk melakaukkan pembacaan data dari database yang pertama kita lakukkan adalah 
+        1. Buat variabel yang menyimpan model dari database yang digunakan + use Model tersebut 
+        2. Sekarnag didalam blade kita tinggal panggil variabel yang berisikan data Model kemudian 
+           gunakan colum yang bersangkutan misal $data['nama']

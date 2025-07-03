@@ -1,0 +1,357 @@
+PHP MENGGUNAKAN ARRAY ASSOSIATIF 
+['namaVariabel'=>'isiData']
+
+
+
+-> assing data ke view 
+    Laravel menyediakan beberapa cara untuk mengirim (pass) data dari route atau controller ke view.
+
+    |       METODE      |       |       CONTOH          |
+    =====================================================
+        1. Array                    1. view('v', ['x' => 1])
+        2. compact()                2. view('v',  compact('x'))
+        3. with()                   3. view('v')->with('x', 1) or 
+                                       view('v')
+                                            ->with('x', 1)
+                                            ->with('y', 2)
+                                            ->with('z', 3);
+    =====================================================
+
+
+-> Route Wildcard
+    Route wildcard di Laravel digunakan untuk menangkap parameter dari URL dan meneruskannya ke controller atau closure. 
+    wildcard memungkinkan kita membuat URL dinamis, seperti /product/123, /user/jhon, dll.
+
+    penggunaannya adalah di routes/web.php, di bagian yang ingin kita buat dia route url nya bisa di ambil tinggal kita delklarasikan 
+    route nya menjadi {{}} contoh siswa/{nim}/2021 * maka nim sekarang bisa kita gunakan di view dengan cara kita tangkap di function($nim){
+        // kemudian kita kirim atau pass dia 
+        return view('page', ['id'=>$id]);
+    }
+
+
+-> Blade 
+    Blade adalah templating engine bawaan Laravel. Ini digunakan untuk mempermudah penulisan dan pengelolaan tampilan (views) di aplikasi Laravel.
+    Dengan Blade, kamu bisa menulis kode HTML yang digabungkan dengan sintaks khusus untuk menambahkan logika seperti looping dan kondisional.
+        *   Mengapa Blade? : Blade memungkinkan kita menulis kode yang lebih bersih, lebih efisien, dan mudah dikelola dibandingkan menulis HTML
+            dan php secara terpisah.
+    --| Sintaks Blade
+        Blade menggunakan kurung kurawal ganda {{ $data }} untuk menampilkan data. Ini cara yang lebih aman untuk menampilkan data di halaman HTMl 
+        Karena secara otomatis mencegah serangan XSS (Cross-Site Scripting).
+    --| Blade Directive 
+        Blade memiliki banyak directive atau perintah untuk mengelolah logika di tampilan seperti percacbangan dan perulangan. Beberapa yang umum
+        digunakan adalah: 
+            *   @if dan @else   : untuk situasi kondisional.
+            *   @foreach        : untuk perulangan array atau koleksi data.
+
+
+-> Layout 
+    Adalah sebuah kerangka yang dimana dia akan menjadi penampung dari main atau children setiap pages, jdi meskiun pages atau children nya berubah
+    maka dia akan tetap ada tanpa harus generate di setiap page. Seperti navbar.
+    --| Dengan components | <x-layout> </x-layout>
+        Kita buat didalam views folder components kemudian buat kerangka nya didalam file yang namanya layout.blade.php
+            *   Pemanggilannya nanti cukup digunakan <x-layout>RenderTampilanHTMLDinamisNyaDisini</x-layout>
+            *   Dan jangan lupa difile layout nya kita buat dimana lokasi yang akan di render misal didalam main 
+                dedngan menggunakan slot 
+            *   <x-*layout>
+                : * Itu sebenarnya nama layout dan tentu kita bisa sesuaikan jadi tidak constant melainkan kondisional dengan
+                    nama layout kita.
+    --| slot | {{ $slot }}
+        adalah lokasi yang ditentukan dimana sebuah html akan di render didalam sebuah layout. Cara panggilnya 
+        mudah yatu {{$slot}} maka setiap halaman children akan dirender dislot tersebut.
+            *   Kondisi dimana slot > 1 : 
+                   <main>
+                        {{ $slot }}
+                    </main>
+                    <footer>
+                        Ini footer dari Page<span>{{$footer}}</span>
+                    </footer>
+
+                Caranya agak berbeda :
+                    Kita asumsikan slot utama itu adalah parent, maka slot children akan berada didalam area slot parent 
+                    cara membuat multi slot didalam 1 layout adalah : 
+                        *   Buat lagi xtag layout, sebuah xtag slot yang diamana ada titiik 2(:) sebagai
+                            inisialisasi nama slot yang akan digunakan misal  :
+
+                                <x-layout> 
+                                    <h1>Slot Parent</h1>
+                                        <x-slot:footer>
+                                            <h1>Slot baru children</h1>
+                                        </x-slot:footer>
+                                </x-layout>
+                            
+                                -- Ingat nama tag x nya itu sesuaikan dengan nama slot yang ada didalam layout.blade 
+
+
+-> Component 
+    Component di Laravel adalah potongan tampilan (UI) yang bisa digunakan berulang-ulang. Komponent disimpan dalam file Blade 
+    (.blade.php) dan bisa digunakan seperti tag HTML di dalam view.
+        * Untuk memanggil component itu sama seperti layout : <x-namaComponent>slot</x-namaComponent>
+
+
+-> Attribute
+    Kita bisa meneruskan HTML attribute biasa ke dalam komponent. Laravel akan otomatis meneruskan attribute tambahan ke elemen root 
+    menggunakan variabel $attributes, contoh 
+        1.  <x-nav-link href="/">Home</x-nav-link> * dikomponent kita cukup ambil attribut seperti biasanya
+        2.  * baru didalam file component nya kita baca dan letakkan dimana atrribute nya dengan cara 
+            $attributes->get("href") :: <a href="{{ $attributes->get('href') }}">{{$slot}}</a> spesifikasi 
+            sebutkan .get attribue nya
+            * cara mudah 
+                <a {{ $attributes->get('href') }}>{{$slot}}</a>
+
+
+-> Props 
+    Props adalah properti yang bisa dikirimkan dari view saat memanggil component. Props akan diterima oleh komponent
+    dan digunakan dalam tampilan.
+        * Menggunakan props ddihalam component wajib kita definisikan dahulu bahwa ada sebuah props yang namanya $....
+            {{-- props wajib di definisikan --}}
+                @props(['active'])
+        * Kita bisa membuat nilai default di props dengan array assosiatif @props(['active' => 'false'])
+        * props dengan value boolean ? 
+            FYI props akan selalu mengirim dalam bentuk string, agar bisa merubah tipe data nya agar dikenali boolean
+            ** kita cukup berikan :(titik dua) sebelum nama propsnya : <x-nav-link href="/" active="true" :highlight="true">Home</x-nav-link>
+
+
+-> helper Function (SEKILAS DOANG)
+    -> helper function request 
+        -- kita akan menggunakan fitur helper yang bisa digunakan didalam attribute ini untuk melakukkan mark sebuah halaman yang aktiv.
+            1.  deklarasikan attribute active yang didalamnya ada helper function request dan attribute ini bersifat boolean : 
+                    <x-nav-link :active="request->is('/')" >Home</x-nav-link>
+            2.  buat kondisi didalam komponent nya yang dimana ada kondisi jika navlink nya active maka dia akan menyatukan style  
+                kedalam component 
+                    ** MERGE **
+                        Merge digunakan untuk melakukkan penggabuangan sebuah attribute, 
+                        caranya dengan menambahkan method .merge(['attributeYangInginDiMerge'=>'opsiYangAkanDiberikan'])
+                            <a {{ $attributes.merge(['class'=> $active ? 'text-tile-500' : '']) }} />
+
+
+-> Migration ("@/database/migration")
+    Migration di Laravel adalah cara versi kontrol untuk skema database. Mirip seperti git, tapi untuk struktur database.
+    Dengan migration, kami bisa membuat, mengubah, dan menghapus tabel menggunakan kode PHP, bukan SQL mentah.     
+
+
+-> Artisan (* Versi yang lebih sederhana dalam membuat schema database dibandingkan migration)
+    Artisan adalah command line tool bawaan larvel yang digunakan untuk : 
+        💠  Membuat file (controller, model, migration, dll)
+        💠  Menjalankan server
+        💠  Menjalankan migration dan seeding
+        💠  Membersihkan cache
+        💠  dan banyak lagi ..
+
+        Artisan membuat proses development Laravel menjadi cepat, rapi, dan efisien.
+
+        --- Membuat migration/tabel dengan artisan untuk database : ---
+
+            -- TERMINAL WAJIB POWERSHELL --
+            ** php artisan list      : Untuk menampilkan semua command yang bisa dipakai di artian
+
+            1. php artisan make:migration nama_file_migrasi_yang_akan_dibuat --> sesuaikan dengan penamaan contoh : php artisan make:migration create_siswa_table
+            2. setup migration di "@/database/migration" sesuai yang ingin dibuat
+            3. running migration yang sudah kita buat : 
+                php artisan migrate
+            4. cek di file database.sqlite di bagian migration untuk melihat semua yang sudah di migrasikan.
+
+        --- Menghapus migration/tabel dengan artisan untuk database : ---
+            1.  php artisan migrate:rollback
+
+                Dia akan melakukkan roleBack atau membatalkan migration schema terbaru sehingga migrasi lain tidak hilang 
+                hanya migrasi yang terbaru saja yang di rollback.
+
+
+-> MODEL 
+    Model di laravel adalah representasi struktur data dari tabel database. Model bertanggung jawab untuk : 
+        # Berinteraksi Dengan Database (CRUD)
+        # Menyimpan data ke tabel
+        # Menerapkan relasi antar tabel 
+
+    Laravel menggunakan ## Eloquent ORM ## (Object-relational mapping) untuk bekerja dengan model. 
+
+    -> ELOQUENT 
+        Eloquent ORM (Object-relational mapping) adalah fitur laravel yang memungkinkan kita untuk berinteraksi dengan
+        database menggunakan sintaks PHP yang bersih dan intuitif, bukan SQL mentah.
+    
+        # php artisan tinker 
+            Adalah comand untuk artisan yang digunakan untuk menjadikan execute code menjadi baris per baris.
+
+                ------------------------------------------------
+            ____| PRAKTEK AMBIL SEMUA DATA DI TABEL DENGAN ORM |____
+                ------------------------------------------------
+         ###-- praktek kita akan melakukkan operasi menampilkan semua data dari sebuah tabel --###
+                1. jalankan php artisan tinker 
+                2. gunakan class tabel yang akan digunakan dengan cara copy model nya tepat di nama namespace kemudian : 
+                    use App\models\namaModel;
+                3. sekarang kita bisa menjalankan tinker untuk berinteraksi dengan tabel siswa 
+                4. tapi jika kalian jalankan namaTabel::all() maka akan terdapat sebuah error no such table namaTabels 
+                    kondisi ini akan membingungkan karena kita sudah membuat tabel tersebut, ini terjadi karena dia mencari 
+                    dengan menambahkan huruf jamak di akhir bukan sesuai nama tabel kita. Ini terjadi karena 
+                    by default dia akan menambahkan s si php nya.
+                5. Solusinya adalah saat nelakukkan migration kita harus membuatnya dengan s misal : 
+                    User -> Users           create_users_table.PHP
+                    Siswa -> Siswas         create_siswas_table.PHP
+                    Player -> Players       create_players_table.PHP
+            
+         ###-- praktek terbaik adalah ketika membuat model maka langsung kita buat juga migration nya --###
+               info lebih jelas lihat di dokumentasi ORM get started 
+                    1. jalankan ini untuk membuat migration dan model nya 
+                        php artisan make:model Flight --migration
+                    2. Perhatikan di app/Models             :: FLight.php 
+                       perhatikan di database/migrations    :: create_flights_table 
+                        Nah dia menjalankan konsep yang kita bahas tadi dimana model dia akan menggunakan nama biasa  
+                        sedangkan migrasi akan ditambahkan s. Dan jika di buka schema database tabel yang dibuat adalah flights 
+                    3. Maka biasakan jika kita buat model maka langsung juga ikutkan migration nya 
+                        kecuali nama model dan migration nya beda konsepnya darinama tabelnya.
+        
+        ###--- Jika kondisinya terlanjur terbuat dan kita tidak menggunakan konsep s tadi maka kita dapat mengakalinya ---###
+                Menggunakan protected didalam model contoh : 
+                    <?php
+                        namespace App\Models;
+                        use Illuminate\Database\Eloquent\Model;
+                        class siswa extends Model
+                        {
+                            // masukkan nama tabel yang tidak menggunakan s disini
+                            protected $table = 'siswa';
+                        }
+                1. Maka sekarang kita bisa menggunakan tabel yang salah tersebut dengan tinker untuk melakukkan interaksi 
+                   ORM dan jangan lupa di use dulu class atabel nya
+            
+
+        ----> INSERT DATA KE DATABASE 
+                ## ::create([])
+                    Laravel melarang kita mengisi banyak colom, hal ini dikarenakan scurity issue. Hal ini dinamakan 
+                    ##-- Mass Assignment --###
+
+                    *   Kita hanya bisa menggunakan create Method jika kita hilangkan Mass Assignment nya 
+                        Caranya di model kita pakai protected $fillable = ['namaKolom']; 
+                        Lihat di dokumentasi Mass Assignment.
+                    
+                    CONTOH INSERT DATA  :
+                        1. php artisan tinker  
+                        2. use App\Models\Siswa
+                        3. Siswa::create(['nama'=>'Abbu Solihin', 'tanggal_lahir'=>'2003-08-23', 'jurusan'=>'teknik informatika', 'nilai'=>90])
+                        4. Siswa::all()
+                        5. Siswa::find(2) // by id
+
+
+-> FACTORY 
+    Factory di Laravel digunakan untuk membuat data dummy (palsu) dalam jumlah banyak secara otomatis. Ini sangat berguna saat :
+        *   Melakukkan testing
+        *   Melakukkan seeding database
+        *   Melakukkan prototipe aplikasi 
+
+    Laravel menggunakan library FakerPHP untuk menghasilkan data palsu seperti nama, alamat, email, dan lain-lain.
+
+        # Disarankan waktu membuat model maka langsung kita buat factory seeder dan juga migration nya 
+
+        CARANYA : 
+            1. php artisan make:model Flight -mfs                           --> (model, factory, seeder)
+                INFO  Model [C:\Users\alhak\Herd\example\app\Models\Flight.php] created successfully.
+                INFO  Factory [C:\Users\alhak\Herd\example\database\factories\FlightFactory.php] created successfully.  
+                INFO  Migration [C:\Users\alhak\Herd\example\database\migrations/2025_06_29_135410_create_flights_table.php] created successfully.
+                INFO  Seeder [C:\Users\alhak\Herd\example\database\seeders\FlightSeeder.php] created successfully.  
+        *** 2. Bagaimana buat model Siswa yang sudah ada tadi, Bagaimana membuat factory pada data yang sudah ada ? 
+                a. php artisan make:factory SiswaFactory --model=Siswa      --> * nama nya menggunakan format NamaModel+Factory 
+                                                                                * kita tentukan model yang akan dibuat factory dengan cara --model=NamaModel
+                b. karena model siswa sudah punya factory maka kita wajib menambahkan didalamnya. ini penting untuk memberitahu sistem
+                    use hasFactory
+                c. membuat dumy data di tabel siswa database, menggunakan array assosiatif dan fake() kita gunakan untuk dumy data 
+                    public function definition(): array
+                    {
+                        return [
+                            //
+                            'nama'=> fake()->name(),                                                                                                            
+                            'tanggal_lahir'=> fake()->dateTimeBetween('-25 years', '-20 years')->format('y-m-d'),
+                            'jurusan'=>fake()->randomElement(['teknik informatika', 'teknik mesin', 'teknik elektro', 'teknik nuklir', 'teknik astro']),
+                            'nilai'=>fake()->numberBetween(80, 100)
+                        ];
+                            //->name()                                  u/ dumy nama
+                            //->dateTimeBetween('', '')->format('')     u/ dumy tahun lahir dengan start tahun dan end tahun serta format penulisan
+                            //->randomElement([])                       u/ untuk melakukkan acak random value yang sudah di tentukan didalam nya
+                            //->numberBetween()                         u/ untuk mendapatkan nilai acak dari misal 0 - 100
+                    }
+                d. Sekarang kita tinggal test factory nya dengan cara : 
+                    1. php artisan tinker
+                    2. use App\Models\Siswa
+                    3. Siswa::factory->count(50)->create()            * method(->) count adalah value berapa data yang akan dibuat 
+                    4. dan dia akan melakukkan generate sesuai dengan value dan menambahkan lagi tanpa menghapus 
+                       data sebelumnya.
+
+
+-> SEEDER 
+    Seeder di laravel adalah fitur yang digunakan untuk mengisi tabel database dengan data awal secara otomatis, baik itu 
+    data dummy untuk keperluan pengujian dan pengembangan, maupun data tetap seperti admin, kategori, atau role default.
+    
+    SEEDER VS FACTORY 
+        Perbedaan antara 2 hal ini, jika kita pakai factory itu kita mlakukkan running dengan php artisan tinker 
+        sedangkan seeder bisa sebagai eksekutor deengan factory.
+    
+    SEEDER BIASANYA DIGUNAKAN BERSAMA FACTORY< DIMANA : 
+        *   Factory berperan sebagai cetakkan data(template), mendefinisikan bentuk data dummy.
+        *   Seeder berperan sebagai eksekutor, yang memanggil factory(atau langsung memasukkan data manual) untuk membuat dan menyimpan 
+            data ke dalam database.
+
+            - IMPLEMENTASI 
+                    * Membuat seeder di model yang sudah dibuat, tapi tidak ada seeder nya 
+                1. php artisan make:seeder SiswaSeeder                          # aturan penamaan : namaModelSeeder
+                2. Menambahkan data dummy dengan seeder : 
+                    ---didalam file SiswaSeeder -> function run -> panggil factory nya darisana
+                        a. Siswa::factory()->count(50)->create();               # seeder as eksekutor, factory as template atau cetakan nya   
+                    ---handle agar spesifik melakukkan running sedeer sesuai kemauan kita by default dia mencari ke DatabaseSeeder
+                        b. php artisan db:seed --class=SiswaSeeder              # running seeder
+                ****---Cara menjalankan seeding lebih dari 1 :  
+                    Karena secara default seeding itu menjalankan DatabaseSeeder maka agar kita bisa sekali running 
+                    menjalankan semua seeding caranya sederhana didalam DatabaseSeeder kita tambahkan code di akhir 
+                    dalam function run yaitu :
+                        c. I. TAMBAHKAN 
+                                $this->call([SiswaSeeder::class, FlightSeeder::class]);     # ::class berfungsi untuk mengambil semua data class nya
+                          II. JALANKAN 
+                                php artisan db:seed                             # Maka dia akan menjalankan 2 seeder, jika ada lebih maka cukup daftarkan saja di arraynya
+
+            * SEEDER BIASANYA DIJALANKAN BERBARENGAN DENGAN MIGRATION 
+                CONTOH : 
+                    Di migration tabel siswa misal kita mendefinisikan field kemudian ingin merubah 
+                    maka mau tidak mau kita drop dengan *** php artisan migrate:fresh *** dia akan drop semua tabel kemudian running ulang.
+
+                    Ini bakalan kita butuhkan karena kemungkinan tabel kita ada yang salah. Cara yang atas tadi tentu kurang efisien ada 
+                    cara yang lebih bagus yaitu mengkombinasikan seeder misal : 
+                        * php artisan migrate:fresh --seed  # jadi kita tidak lagi perlu runing satu satu karena ada perubahan.
+
+
+-> CONTROLLER 
+     Controller di laravel adalah bagian dari pattern MVC (Model-View-Controller) yang bertugas menenagani logika aplikasi dan menghubungkan 
+    antara model dam view.
+     Controller menerima permintaan dari user, mengolahnya, dan mengembalikan response yang sesuai. 
+     Sederhananya, Model = data, View = tampilan, dan Controller = pengatur alur.
+
+        Route::get('/siswa', function() {
+                $data = Siswa::orderBy('nilai', 'desc')->get();       // ini adlah cotroller area dia menghubungkan/mengatur model ke view
+
+                return view('siswa.index', ['data'=>$data]);    
+            });
+
+    Meletakkan controller langsung didalam file routes itu kurang efisien karena akan membuat alur aplikasi kita akan susah dipahami.
+    Solusi adalah kita membangun file controller nya tersendiri berikut caranya : 
+
+        1. php artisan make:controller NamaController -> berasal dari NamaModel+Controller
+        2. masukkan baris controller nya didalam function controller 
+                class SiswaController extends Controller {
+                    public function index()
+                    {
+                        $data = Siswa::orderBy('nilai', 'desc')->get();       
+                        return view('siswa.index', ['data'=>$data]);   
+                    }
+                }
+        3. di routes kita hapus function yang disediakan di dekat route dan ganti menjadi sebuah array 
+           yang dimana isinya adalah controller kita.
+                Route::get('/siswa', [SiswaController::class, 'index']);
+            * [namaController::class, 'namaFunctionYangBertangungJawab']
+
+    
+    ### TIPS :: 
+                ADA CARA MUDAH UNTUK MEMBUAT CONTROLLER KHUSU DI KONTEKS CRUD (CREAD, READ, UPDATE, DELETE), 
+                    dia akan memberikan template kepada kita sehingga enak untuk digunakan.
+                        1. jalankan di terminal 
+                            php artisan make:controller SiswaController --resource
+                        2. dia membuatkan kita file controller yang didalamnya sudah ada template function nya 
+                           
+
+
+
