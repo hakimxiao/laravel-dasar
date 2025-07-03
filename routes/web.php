@@ -8,7 +8,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function () {
+Route::get('belajar-laravel/about', function () {
     // *    || pass with array ||
     $data = 'Abbu Solihin Alhakim';
     $umur = 21;
@@ -21,9 +21,9 @@ Route::get('/about', function () {
     // return view('about')
     //                         ->with('data', 'abu solihin alhakim')
     //                         ->with('umur', 21);
-});
+})->name('about');
 
-Route::get('/siswa', [SiswaController::class, 'index']);
+Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
 
 // Route::get('/siswa', function() {
 //     // // DATA STATIS : 
@@ -41,7 +41,7 @@ Route::get('/siswa', [SiswaController::class, 'index']);
 // });
 
 
-Route::get('/siswa/{id}', [SiswaController::class, 'show']);
+Route::get('/siswa/{id}', [SiswaController::class, 'show'])->name('siswa.show');
 
 // // wildcard or url dinamis
 // // maka url yang didalam {} bisa kita akses sebagai variabel
@@ -57,7 +57,7 @@ Route::get('/siswa/{id}', [SiswaController::class, 'show']);
 
 Route::get('/contact', function() {
     return view('contact');
-});
+})->name('contact');
 
 /**
  * MASALAH Siswa::find()

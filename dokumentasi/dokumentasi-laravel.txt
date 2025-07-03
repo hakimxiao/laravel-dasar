@@ -371,5 +371,28 @@ PHP MENGGUNAKAN ARRAY ASSOSIATIF
             melaikan meng append http://example.test/siswa?search=hakim&page=2
                            
 
+-- NAMED ROUTE 
+    Named route adalah metode untuk menemai route yang dimana misal kita ingin membuat nama route : mahasiswa/hakim nah tentu kita juga harus 
+    membuat folder nya, Mengganti href dll. Bagaimana tanpa buat folder bisa ? jawaban nya dengan named route. Kita memberikan penamaan dalam 
+    routre kita ini sehingga jika kita melakukan navigation ke href kita tidak nge refer ke /about tapi merefer ke nama dari route nya. 
+    jadi di route kit buat dia kompleks tetapi didalam href kita bukan panggil route nya langsung melainkan nameed nya saja. berikut caranya : 
+        1. Di folder routes didalam file route yang ingin dinamai kita tinggal berikan di akhirny itu method name ->name('about)
+            Route::get('perusahaanKu/profil/about', function () {  --> kita bebas mau memberi nama route apa
+                $data = 'Abbu Solihin Alhakim';
+                $umur = 21;
+                return view('about', ['data' => $data, 'umur' => $umur]);
+            })->name('about');                 --> ini yang dipanggil di href
+        2. Sehingga di href nya kita tinggal panggil route('namaRouteNya');
+            <li>
+                <x-nav-link href="{{ route('about') }}" > About </x-nav-link>
+            </li>
+        3. Nah dia otomatis dan juga gak perlu lagi buat route folder nya jadi yang kita navigasikan name nya dan di bagian file  
+            routes nya disana yang kita otak atik.
+        4. terkhusus file bernama indedx kita spesifik kan karena index sifatnya global misal siswa.index
+    Q   5. Untuk yang sifatnya kompleks dimana href nya menggunakan named routes dan juga dinamic route maka kita 
+    A       sama hanya saja diberikan koma   
+                <td>                    nama        param
+                    <a href="{{ route('siswa.show', $siswa['id']) }}">View Details Siswa</a>
+                </td>
 
 

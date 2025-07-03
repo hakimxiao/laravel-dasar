@@ -37,17 +37,17 @@
                                 </x-nav-link>
                         </li>
                         <li>
-                            <x-nav-link class="text-gray-500 transition hover:text-gray-500/75" href="/about"
+                            <x-nav-link class="text-gray-500 transition hover:text-gray-500/75" href="{{ route('about') }}"
                                 :active="request()->is('about')"> About
                             </x-nav-link>
                         </li>
                         <li>
-                            <x-nav-link class="text-gray-500 transition hover:text-gray-500/75" href="/contact"
+                            <x-nav-link class="text-gray-500 transition hover:text-gray-500/75" href="{{ route('contact') }}"
                                 :active="request()->is('contact')"> Contact
                             </x-nav-link>
                         </li>
                         <li>
-                            <x-nav-link class="text-gray-500 transition hover:text-gray-500/75" href="/siswa"
+                            <x-nav-link class="text-gray-500 transition hover:text-gray-500/75" href="{{ route('siswa.index') }}"
                                 :active="request()->is('siswa')"> Siswa
                             </x-nav-link>
                         </li>
