@@ -19,4 +19,10 @@ class Siswa extends Model
 
     // menghilangkan Mass Assingment Agar kita bisa bebas create didalam colum dan tidak dibatasi jumlah
     protected $fillable = ['nama', 'tanggal_lahir', 'jurusan', 'nilai'];
+
+    // function akses model mentor dari model siswa
+    public function mentor() {
+        //  SISWA One (SISWA M-------1 MENTOR)
+        return $this->belongsTo(Mentor::class);
+    }
 }

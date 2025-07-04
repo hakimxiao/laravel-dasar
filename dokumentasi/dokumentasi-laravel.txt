@@ -395,4 +395,8 @@ PHP MENGGUNAKAN ARRAY ASSOSIATIF
                     <a href="{{ route('siswa.show', $siswa['id']) }}">View Details Siswa</a>
                 </td>
 
-
+    
+-- TABLE RELATIONSHIP
+    Bagaiaman cara menghubungkan antara 2 table atau lebih. Jadi kita akan membuat hubungan dimana siswa memiliki mentor dan mentor 
+    boleh memiliki banyak siswa. 1 M 
+    

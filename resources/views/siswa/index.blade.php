@@ -16,11 +16,11 @@
             <tbody class="divide-y divide-gray-200">
                 @foreach ($data as $siswa)
                     <tr class="*:text-gray-900 *:first:font-medium">
-                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa['nama']}}</td>
-                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa['tanggal_lahir']}}</td>
-                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa['jurusan'] }}</td>
-                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa['nilai']}}</td>
-                        <td class="px-3 py-2 whitespace-nowrap"><a href="{{ route('siswa.show', $siswa['id']) }}"
+                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa->nama}}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa->tanggal_lahir}}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa->jurusan }}</td>
+                        <td class="px-3 py-2 whitespace-nowrap">{{$siswa->nilai}}</td>
+                        <td class="px-3 py-2 whitespace-nowrap"><a href="{{ route('siswa.show', $siswa->id) }}"
                                 class="hover:text-green-500 font-bold opacity-50">View Details Siswa</a>
                         </td>
                     </tr>

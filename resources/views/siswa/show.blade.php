@@ -5,32 +5,38 @@
             <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                 <dt class="font-medium text-gray-900">Nama</dt>
 
-                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa['nama'] }}</dd>
+                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa->nama }}</dd>
             </div>
 
             <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                 <dt class="font-medium text-gray-900">Jurusan</dt>
 
-                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa['jurusan'] }}</dd>
+                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa->jurusan }}</dd>
             </div>
 
             <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                 <dt class="font-medium text-gray-900">Tanggal Lahir</dt>
 
-                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa['tanggal_lahir'] }}</dd>
+                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa->tanggal_lahir }}</dd>
             </div>
 
             <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                 <dt class="font-medium text-gray-900">Nilai</dt>
 
-                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa['nilai'] }}</dd>
+                <dd class="text-gray-700 sm:col-span-2">{{ $detailSiswa->nilai }}</dd>
             </div>
-
             <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                <dt class="font-medium text-gray-900">SISWA ID</dt>
+                <dt class="font-medium text-gray-900">Siswa Id</dt>
 
                 <dd class="text-blue-700 sm:col-span-2">
-                    {{ $detailSiswa['id'] }}
+                    {{ $detailSiswa->id }}
+                </dd>
+            </div>
+            <div class="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                <dt class="font-medium text-gray-900">Mentor Siswa</dt>
+
+                <dd class="text-blue-700 sm:col-span-2">
+                    {{ $detailSiswa->mentor->nama }}
                 </dd>
             </div>
         </dl>

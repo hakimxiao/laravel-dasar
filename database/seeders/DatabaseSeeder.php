@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Mentor;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,6 +21,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',           INI JIKA DIJALANKAN 2 KALI AKAN ERROR KARENA EMAIL SIFATNYA UNIK 
         // ]);
 
-        $this->call([SiswaSeeder::class, FlightSeeder::class]);
+        $this->call([
+            MentorSeeder::class,
+            SiswaSeeder::class, 
+            FlightSeeder::class]);
     }
 }
