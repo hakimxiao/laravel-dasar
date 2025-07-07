@@ -34,6 +34,15 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         //
+        Siswa::create([
+            "nama"=> $request['nama'],
+            "tanggal_lahir"=> $request['tanggal_lahir'],
+            "jurusan"=> $request['jurusan'],
+            "nilai"=>$request['nilai'],
+            "mentor_id"=>$request['mentor']
+        ]);
+
+        return redirect()->route('siswa.index');
     }
 
     /**

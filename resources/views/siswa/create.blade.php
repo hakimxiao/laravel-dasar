@@ -1,6 +1,6 @@
 <x-layout>
     <h1 class="text-xl mb-5 font-bold">Creat Siswa</h1>
-    <form action="#" method="POST" class="space-y-4 max-w-4xl">
+    <form action="{{ route('siswa.store') }}" method="POST" class="space-y-4 max-w-4xl">
 
         {{-- ini adalah keamanan untuk mencegah hacking dan wajib digunakan saat buat form --}}
         @csrf

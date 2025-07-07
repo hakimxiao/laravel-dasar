@@ -18,7 +18,7 @@ class Siswa extends Model
     protected $table = 'siswa';
 
     // menghilangkan Mass Assingment Agar kita bisa bebas create didalam colum dan tidak dibatasi jumlah
-    protected $fillable = ['nama', 'tanggal_lahir', 'jurusan', 'nilai'];
+    protected $fillable = ['nama', 'tanggal_lahir', 'jurusan', 'nilai', 'mentor_id'];
 
     // function akses model mentor dari model siswa
     public function mentor() {
