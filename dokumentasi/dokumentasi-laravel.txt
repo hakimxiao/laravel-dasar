@@ -405,3 +405,5 @@ PHP MENGGUNAKAN ARRAY ASSOSIATIF
 
 
 -- VALIDATION DAN SHOW ERROR
+    Repopulating Forms
+        Digunakan untuk mendapatkan lagi value dari form yang tidak berhasil lulus dari validasi. Lihat di docs laravel.

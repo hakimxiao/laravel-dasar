@@ -50,7 +50,7 @@ class SiswaController extends Controller
             "tanggal_lahir"=> $validated['tanggal_lahir'],
             "jurusan"=> $validated['jurusan'],
             "nilai"=>$validated['nilai'],
-            "mentor_id"=>$validated['mentor']
+            "mentor_id"=>$validated['mentor_id']
         ]);
 
         return redirect()->route('siswa.index');
