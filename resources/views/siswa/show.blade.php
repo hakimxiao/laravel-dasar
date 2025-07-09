@@ -41,6 +41,15 @@
             </div>
         </dl>
     </div>
+    {{-- di laravel untuk melakukan delete kita menggunakan form dengan method post dan kemudian kita ganti method nya
+    ke delete dengan @form --}}
+    <form action="{{ route('siswa.destroy', $detailSiswa->id) }}" method="post">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit" class="my-8 px-4 py-2 bg-red-400 text-white rounded cursor-pointer">Delete</button>
+    </form>
+
     {{-- slot baru: harus sesuai namanya di layout --}}
     <x-slot:footer>
         <strong>Siswa Detail Page</strong>
