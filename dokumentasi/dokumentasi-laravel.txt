@@ -427,3 +427,45 @@ PHP MENGGUNAKAN ARRAY ASSOSIATIF
         -   Menyimpan status login user 
         -   Menampilkan pesan sukses/gagal (flash message)
         -   menyimpan data form yang belum disubmit
+
+
+-- ROUTE MODEL BINDING 
+    Route model binding adlaah fitur pada framework seperti Laravell yang secara otomatis akan mengambil model Eloquent berdasarkan parameter 
+    yang ada di URL, sehinggga kamu tidak perlu lagi melakukkan query secara manual.
+
+    -   Perhatikan di dalam route kita jika ada route yang menggunakan wildcard atau dynamic route {{ id }}
+        secara normal kita harus query dulu dia di dalam controller agar nanti dapat data sesuai dari database berdasarkan ID 
+    *   Tapi ada cara dimana kita tidak perlu lagi melakukkan query di controller nya melainkan langsung saja di route nya 
+    -   CARA TERSEBUT DI NAMAKAN MODEL BINDING 
+    -   Dimana kita menghubungkan si model kita langsung didalam route nya misal : 
+
+                Route::get('/siswa/{siswa}', [SiswaController::class, 'show'])->name('siswa.show');
+                Route::delete('/siswa/{siswa}', [SiswaController::class, 'destroy'])->name('siswa.destroy');
+    
+    -   Sehingga nanti di controller kita tidak lagi nge query secara manual melainkan seperti ini : 
+    -   
+        ### TANPA MODEL BINDING :
+            public function destroy(String $id)
+            {
+                $siswa = Siswa::findOrFail($id); 
+                
+                $siswa->delete();
+
+                return redirect()->route('siswa.index')->with('success', 'Data Berhasil Dihapus');
+            }
+
+        ### DENGAN MODEL BINDING :    
+            public function destroy(Siswa $siswa)
+            {
+                $siswa->delete();
+
+                return redirect()->route('siswa.index')->with('success', 'Data Berhasil Dihapus');
+            }
+
+        -- INI AKAN MENGHAPUS SESUAI DENGAN YANG KITA INGINKAN KARENA LARAVEL YANG AKAN MENGATUR BELAKANG LAYARNYA
+    
+    
+    KEUNTUNGAN ROUTE MODEL BINDING ? 
+        -   Mengurangi kode boilerplate
+        -   Meningkatkan Keamanan(otomatis 404 jika tidak di temukan)
+        -   Lebih bersih dan mudah dibaca

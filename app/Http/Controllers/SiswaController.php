@@ -59,11 +59,12 @@ class SiswaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Siswa $siswa)
     {
         //
-        $detailSiswa = Siswa::with('mentor')->findOrFail($id);
-        return view('siswa.show', ['detailSiswa'=> $detailSiswa]);    
+        // $detailSiswa = Siswa::with('mentor')->findOrFail($id);   // tanpa model binding
+        $siswa->load('mentor');                          // dengan model binding + relationship tabel mentor
+        return view('siswa.show', ['detailSiswa'=> $siswa]);    
     }
 
     /**
@@ -85,11 +86,11 @@ class SiswaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Siswa $siswa)
     {
         //
             // 1.   Find dulu didatabase
-        $siswa = Siswa::findOrFail($id);
+        // $siswa = Siswa::findOrFail($id); // Tanpa model binding
             // 2.   Delete Jika tersedia 
         $siswa->delete();
 
