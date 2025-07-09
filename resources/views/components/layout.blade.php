@@ -12,6 +12,14 @@
 </head>
 
 <body>
+    @if (session()->has('success'))
+        <div id="flash" class="p-4 bg-green-50 text-green-500 text-center border border-slate-900 font-bold">
+            <p>
+                {{ session('success') }}
+            </p>
+        </div>
+    @endif
+
     <header class="bg-white">
         <div class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
             <a class="block text-teal-600" href="#">

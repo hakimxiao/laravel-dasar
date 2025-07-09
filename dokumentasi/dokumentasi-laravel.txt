@@ -410,3 +410,20 @@ PHP MENGGUNAKAN ARRAY ASSOSIATIF
 
 
 -- HANDLE DELETE REQUEST
+
+
+-- FLASH MESSAGE 
+    Flash message adlaah pesan sementara yabng disinpa didalam session dan hanya ditampilkan sekali setelah redirect. Biasanya digunakan 
+    untuk memberikan feedback kepada user setekllah melakukkan aksi tertentu : 
+        -   Menyimpan Data 
+        -   Mengupdate data 
+        -   Mengahapus Data 
+        -   Gagal Login dll.
+
+
+-- SESSION 
+    Session adalah cara Laravel menyimpan data sementara du server untuk digunakan pada permintaan (request) berikutnya.
+    Data session biasanya digunakan untuk : 
+        -   Menyimpan status login user 
+        -   Menampilkan pesan sukses/gagal (flash message)
+        -   menyimpan data form yang belum disubmit

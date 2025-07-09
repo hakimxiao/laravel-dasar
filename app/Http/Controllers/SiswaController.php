@@ -53,7 +53,7 @@ class SiswaController extends Controller
             "mentor_id"=>$validated['mentor_id']
         ]);
 
-        return redirect()->route('siswa.index');
+        return redirect()->route('siswa.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -93,6 +93,6 @@ class SiswaController extends Controller
             // 2.   Delete Jika tersedia 
         $siswa->delete();
 
-        return redirect()->route('siswa.index');
+        return redirect()->route('siswa.index')->with('success', 'Data Berhasil Dihapus');
     }
 }
