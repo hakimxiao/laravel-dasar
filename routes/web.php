@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SiswaController;
 use App\Models\Siswa;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// # - - - AUTH START - - - #
+// * Route Handler AuthUI
+Route::get('/auth/login', [AuthController::class, 'showLogin'])->named('auth.login');
+
+Route::get('/auth/register', [AuthController::class, 'showRegister'])->named('auth.register');
+
+// Route Handler AuthLogic
+Route::post('/auth/login', [AuthController::class, 'login'])->named('login');
+
+Route::post('/auth/register', [AuthController::class, 'register'])->named('register');
+// # - - - AUTH END - - - #
 
 Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
 

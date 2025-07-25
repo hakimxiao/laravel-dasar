@@ -1,0 +1,4 @@
+CONTROLLER : 
+    Untuk membuat file controller jika controller tersebut terkait dengan CRUD maka kitta bis tambahkan -- resource
+    sehingga diakan menyediakan function sip pakai untuk kita. : 
+     $ php artisan make:controller SiswaController --resource
