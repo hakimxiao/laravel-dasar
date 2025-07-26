@@ -11,14 +11,14 @@ Route::get('/', function () {
 
 // # - - - AUTH START - - - #
 // * Route Handler AuthUI
-Route::get('/auth/login', [AuthController::class, 'showLogin'])->named('auth.login');
+Route::get('/auth/login', [AuthController::class, 'showLogin'])->name('auth.login');
 
-Route::get('/auth/register', [AuthController::class, 'showRegister'])->named('auth.register');
+Route::get('/auth/register', [AuthController::class, 'showRegister'])->name('auth.register');
 
 // Route Handler AuthLogic
-Route::post('/auth/login', [AuthController::class, 'login'])->named('login');
+Route::post('/auth/login', [AuthController::class, 'login'])->name('login');
 
-Route::post('/auth/register', [AuthController::class, 'register'])->named('register');
+Route::post('/auth/register', [AuthController::class, 'register'])->name('register');
 // # - - - AUTH END - - - #
 
 Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa.index');
