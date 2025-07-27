@@ -2,3 +2,10 @@ CONTROLLER :
     Untuk membuat file controller jika controller tersebut terkait dengan CRUD maka kitta bis tambahkan -- resource
     sehingga diakan menyediakan function sip pakai untuk kita. : 
      $ php artisan make:controller SiswaController --resource
+
+
+MENGATUR BERRAPA LAMA SESSION BERLAKU : 
+    Di laravel tinggal pergi ke folder config/session.php Dibagian SESSION_LIFETIME untuk waktu dibagian 
+    SESSION_EXPIRE_ON_CLOSE setiap aplikasi di close.
+
+    Value nya kita rubah dari file .env sesuai dengan nama variabel nya.

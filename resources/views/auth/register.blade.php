@@ -30,15 +30,21 @@
                                         <!--Name input-->
                                         <div class="relative mb-4 flex flex-col" data-twe-input-wrapper-init>
                                             <label for="name" class="font-bold">Name</label>
-                                            <input type="text" name="name" id="name"
+                                            <input type="text" name="name" id="name" value="{{ old('name') }}"
                                                 class="px-2 py-1 w-full border-1 rounded mt-2">
+                                            @error('name')
+                                                <div class="text-red-500 text-sm">{{$message}}</div>
+                                            @enderror
                                         </div>
 
                                         <!--Email input-->
                                         <div class="relative mb-4 flex flex-col" data-twe-input-wrapper-init>
                                             <label for="email" class="font-bold">Email</label>
-                                            <input type="email" name="email" id="email"
+                                            <input type="email" name="email" id="email" value="{{ old('email') }}"
                                                 class="px-2 py-1 w-full border-1 rounded mt-2">
+                                            @error('email')
+                                                <div class="text-red-500 text-sm">{{$message}}</div>
+                                            @enderror
                                         </div>
 
                                         <!--Password input-->
@@ -46,6 +52,9 @@
                                             <label for="password" class="font-bold">Password</label>
                                             <input type="password" name="password" id="password"
                                                 class="px-2 py-1 w-full border-1 rounded mt-2">
+                                            @error('password')
+                                                <div class="text-red-500 text-sm">{{$message}}</div>
+                                            @enderror
                                         </div>
 
                                         <!--Confirm Password input-->
