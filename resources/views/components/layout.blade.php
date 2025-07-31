@@ -62,15 +62,22 @@
 
                 <div class="flex items-center gap-4">
                     <div class="sm:flex sm:gap-4">
-                        <a class="block rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-teal-700"
-                            href="#">
+                        <a class="block rounded-md bg-teal-600 px-5 py-2.5 text-md font-medium text-white transition hover:bg-teal-700"
+                            href="/auth/login">
                             Login
                         </a>
 
-                        <a class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 transition hover:text-teal-600/75 sm:block"
-                            href="#">
+                        <a class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-md font-medium text-teal-600 transition hover:text-teal-600/75 hover:bg-gray-200 sm:block"
+                            href="/auth/register">
                             Register
                         </a>
+
+                        {{-- logout button --}}
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button
+                                class="block rounded-md bg-red-600 px-5 py-2.5 text-md font-medium text-white transition hover:bg-red-700">Logout</button>
+                        </form>
                     </div>
 
                     <button
