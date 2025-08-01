@@ -62,22 +62,33 @@
 
                 <div class="flex items-center gap-4">
                     <div class="sm:flex sm:gap-4">
-                        <a class="block rounded-md bg-teal-600 px-5 py-2.5 text-md font-medium text-white transition hover:bg-teal-700"
-                            href="/auth/login">
-                            Login
-                        </a>
+                        {{-- *** AKAN DIRENDER JIKA USER TIDAK TERAUTHENTIKASI (BELUM LOGIN) --}}
+                        @guest
+                            <a class="block rounded-md bg-teal-600 px-5 py-2.5 text-md font-medium text-white transition hover:bg-teal-700"
+                                href="{{ route('auth.login') }}">
+                                Login
+                            </a>
 
-                        <a class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-md font-medium text-teal-600 transition hover:text-teal-600/75 hover:bg-gray-200 sm:block"
-                            href="/auth/register">
-                            Register
-                        </a>
+                            <a class="hidden rounded-md bg-gray-100 px-5 py-2.5 text-md font-medium text-teal-600 transition hover:text-teal-600/75 hover:bg-gray-200 sm:block"
+                                href="{{ route('auth.register') }}">
+                                Register
+                            </a>
+                        @endguest
 
-                        {{-- logout button --}}
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button
-                                class="block rounded-md bg-red-600 px-5 py-2.5 text-md font-medium text-white transition hover:bg-red-700">Logout</button>
-                        </form>
+                        {{-- *** HANYA AKAN DIRENDER JIKA USER TERAUTHENTIKASI --}}
+                        @auth
+                            <span
+                                class="block rounded-md bg-yellow-600 px-5 py-2.5 text-md font-medium text-white transition hover:bg-yellow-700">
+                                {{ Auth::user()->name }}
+                            </span>
+
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button
+                                    class="block rounded-md bg-red-600 px-5 py-2.5 text-md font-medium text-white transition hover:bg-red-700">Logout</button>
+                            </form>
+                        @endauth
+
                     </div>
 
                     <button
