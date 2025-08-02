@@ -1,0 +1,43 @@
+PROTECTED ROUTE DI LARAVEL :
+    Untuk membuat route yang diproteksi laravel menyediakan middleware yaitu middleware auth 
+    jadi dia akan melakukkan pengecekkan apakah user sudah login dll.
+
+MIDDLEWARE : 
+    Adalah lapisan perantara(perantara tengah) yang digunakan untuk menyaring http request yang masuk ke aplikasi kamu sebelum menca
+    pai kontroller.
+
+    Bayangkan seperti pejaga gerbang yang memeriksa setiap permintaan(request) - apakah pengguna sudah login? apakah 
+    punya akses admin? apakah request berasal dari domain tertentu? jika ya, lanjutkan ke controller; jika tidak tolak atau 
+    redirect;
+
+CARA PAKAI : 
+    tambahkan method middleware ->middleware('auth');
+    di akhir dari sebuah route. 
+    
+    CARA 1 : BUAT SATU SATU :
+        Route::get('/siswa/create', [SiswaController::class, 'create'])->name('siswa.create')->middleware('auth');
+    Maka sekarang route tersebut sudah terpotec dengan middleware sebelum dia masuk ke controller.
+    Dia adalah sebuah middleware yang sudah disediakan oleh larael sebagai framework.
+    
+    CARA 2 : GROUPING :
+    Selain melakukkan grouping middleware terhadap route kita juga melakukkan grouping terhadap controller
+    karena sama. Maka arraynya kita hilangkan dan gabungkan langsung saja didalam method Route nya 
+    yaitu nama dari function yang terkait pada controller tersebut : 
+
+        Route::middleware('auth')->controller(SiswaController::class)->group(function () {
+            Route::get('/siswa', 'index')->name('siswa.index');
+
+            Route::post('/siswa', 'store')->name('siswa.store');
+
+            Route::get('/siswa/create', 'create')->name('siswa.create');
+
+            Route::get('/siswa/{siswa}', 'show')->name('siswa.show');
+
+            Route::delete('/siswa/{siswa}', 'destroy')->name('siswa.destroy');
+        });
+
+MIDDLEWARE auth DAN MIDDLEWARE guest
+    @ Middleware auth adalah middleware untuk route protector yang dimana route ini hanya bisa di akses jika
+      usernya ter autentikasi.
+    @ Middleware guest adalah untuk route protector juga tapi bedanya routa yang dimodekan dengan middleware guest 
+      hanya akan bisa di akses jika usernya dalam mode guest atau tidak terautentikasi.
